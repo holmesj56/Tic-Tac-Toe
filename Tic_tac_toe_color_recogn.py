@@ -29,9 +29,9 @@ class Object_detect():
             [18.8, -7.91, -54.49, -23.02, -0.79, -14.76], # point to grab
         ]
 
-        # parameters to calculate camera clipping parameters 计算相机裁剪参数的参数
+        # parameters to calculate camera clipping parameters 
         self.x1 = self.x2 = self.y1 = self.y2 = 0
-        # set cache of real coord 设置真实坐标的缓存
+        # set cache of real coord 
         self.cache_x = self.cache_y = 0
         # set color HSV
         self.HSV = {
@@ -55,7 +55,7 @@ class Object_detect():
 
         # Get ArUco marker dict that can be detected.
         self.aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
-        # Get ArUco marker params. 获取 ArUco 标记参数
+        # Get ArUco marker params.  ArUco 
         self.aruco_params = cv2.aruco.DetectorParameters_create()
 
     def run(self):
@@ -74,10 +74,10 @@ class Object_detect():
             frame = frame[int(self.y2*0.78):int(self.y1*1.1),
                           int(self.x1*0.86):int(self.x2*1.08)]
         return frame
-      # get points of two aruco 获得两个 aruco 的点位
+      # get points of two aruco  aruco 
 
     def get_calculate_params(self, img):
-        # Convert the image to a gray image 将图像转换为灰度图像
+        # Convert the image to a gray image 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # Detect ArUco marker.
         corners, ids, rejectImaPoint = cv2.aruco.detectMarkers(
@@ -106,7 +106,7 @@ class Object_detect():
     
     # draw aruco
     def draw_marker(self, img, x, y):
-        # draw rectangle on img 在 img 上绘制矩形
+        # draw rectangle on img  img 
         cv2.rectangle(
             img,
             (x - 20, y - 20),
@@ -120,13 +120,13 @@ class Object_detect():
                     cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (243, 0, 0), 2,)
 
     # set parameters to calculate the coords between cube and mycobot280
-    # 设置参数以计算立方体和 mycobot 之间的坐标
+    #  mycobot 
     def set_params(self, c_x, c_y, ratio):
         self.c_x = c_x
         self.c_y = c_y
         self.ratio = 220.0/ratio
 
-    # set camera clipping parameters 设置相机裁剪参数
+    # set camera clipping parameters 
     def set_cut_params(self, x1, y1, x2, y2):
         self.x1 = int(x1)
         self.y1 = int(y1)
@@ -134,16 +134,16 @@ class Object_detect():
         self.y2 = int(y2)
 
     def pump_on(self):
-        # 让2号位工作
+        # 2
         self.mc.set_basic_output(2, 0)
-        # 让5号位工作
+        # 5
         self.mc.set_basic_output(5, 0)
 
-    # 停止吸泵 m5
+    #  m5
     def pump_off(self):
-        # 让2号位停止工作
+        # 2
         self.mc.set_basic_output(2, 1)
-        # 让5号位停止工作
+        # 5
         self.mc.set_basic_output(5, 1)
 
 def tictactoeCenters(row, col):
@@ -494,7 +494,7 @@ if _name_ == "_main_":
             init -= 1
             continue
 
-        # calculate the parameters of camera clipping 计算相机裁剪的参数
+        # calculate the parameters of camera clipping 
         if init_num < 20:
             if detect.get_calculate_params(frame) is None:
                 #cv2.imshow("figure", frame)
@@ -520,7 +520,7 @@ if _name_ == "_main_":
             init_num += 1
             continue
 
-        # calculate params of the coords between cube and mycobot280 计算立方体和 mycobot 之间坐标的参数
+        # calculate params of the coords between cube and mycobot280  mycobot 
         if nparams < 10:
             if detect.get_calculate_params(frame) is None:
                 #cv2.imshow("figure", frame)
